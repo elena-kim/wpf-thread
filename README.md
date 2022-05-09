@@ -2,7 +2,7 @@
 
 ## Contents
 - [Thread](#thread)
-- [Dispatcher](#dispathcer)
+- [Dispatcher](#dispatcher)
 - [BackgroundWorker](#backgroundworker)
 
 <br>
@@ -41,3 +41,5 @@ WPF에서 멀티 스레드를 다루는 방법에는 **`Dispatcher`** 와 **`Bac
 - [Thread](https://wergia.tistory.com/187)
 - [WPF Multi Thread](https://ddka.tistory.com/entry/WPF-multi-thread)
 - [Thread Affinity](https://blueasa.tistory.com/1258)
+- [Dispatcher](https://techlog.gurucat.net/167)
+- [BackgroundWorker](http://eincs.com/2009/09/wpf-multi-threaed-programming/)
