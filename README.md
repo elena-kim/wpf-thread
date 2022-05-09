@@ -2,9 +2,8 @@
 
 ## Contents
 - [Thread](#thread)
-- [BackgroundWorker](#backgroundworker)
 - [Dispatcher](#dispathcer)
-- [Invoke / BeginInvoke](#invoke--begininvoke)
+- [BackgroundWorker](#backgroundworker)
 
 <br>
 
@@ -24,13 +23,17 @@
 
 WPF는 기본적으로 **STA(Single Thread Apartment)** 모델을 지원한다. 이는 하나의 기본 스레드가 전체 응용 프로그램에서 실행되고 이 스레드에 모든 WPF 객체가 종속되어 있다. 기본 스레드를 제외한 다른 스레드에서는 WPF 객체에 엑세스할 수 없으며 이를 **스레드 선호도(Thread Affinity)** 라고 한다.
 
+![image](https://user-images.githubusercontent.com/74305823/167331110-0b53dfe4-7bd0-4e6b-92b6-932c511d2b02.png)
+
+WPF에서 멀티 스레드를 다루는 방법에는 **`Dispatcher`** 와 **`BackgroundWorker`** 가 있다.
+
 <br>
 
 ## Dispatcher
 
 <br>
 
-## Invoke / BeginInvoke
+## BackgroundWorker
 
 <br>
 
