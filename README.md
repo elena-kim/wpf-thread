@@ -3,7 +3,7 @@
 ## Contents
 - [Thread](#thread)
 - [Dispatcher](#dispathcer)
-- [Invoke / BeginInvoke](#invoke/begininvoke)
+- [Invoke / BeginInvoke](#invoke--begininvoke)
 
 <br>
 
