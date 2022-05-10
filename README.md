@@ -47,6 +47,11 @@ WPF에서 멀티 스레드를 다루는 방법에는 **`Dispatcher`** 와 **`Bac
 
 **Dispatcher**는 `System.Windows.threading.Dispatcher` 클래스의 인스턴스로, UI 컨트롤 작업 항목의 대기열을 관리한다. WPF 애플리케이션을 실행하면 자동적으로 Dispatcher 객체가 생성되고 Run 메서드가 호출된다. Run 메서드는 작업 대기열을 초기화하기 위해 사용된다. 
 
+Dispatcher는 UI 스레드와 연관되어 있으며, UI 스레드 대기열에 있는 메서드는 Dispatcher 객체 내에서 호출된다. 이벤트가 호출되거나 화면이 바뀔 때, 혹은 코드 비하인드에서 메서드가 호출될 때마다 이 모든 일들은 UI 스레드와 UI 스레드 대기열에서 일어나며, 호출된 메서드는 Dispatcher 큐에 들어가게 된다. Dispatcher는 동기 순서에 따라 메시지 큐를 실행한다.
+
+<br>
+
+### DispatcherObject
 
 <br>
 
