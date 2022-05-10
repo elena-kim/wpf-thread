@@ -53,6 +53,34 @@ Dispatcher는 UI 스레드와 연관되어 있으며, UI 스레드 대기열에 
 
 ### DispatcherObject
 
+Window, Button, TextBox 등 모든 WPF UI 컨트롤은 **DispatcherObject** 클래스를 상속받았다.
+
+![image](https://user-images.githubusercontent.com/74305823/167590896-ef9bd74d-c6e9-4a00-9e31-0f8aadb2f847.png)
+
+예를 들어, WPF에서 Button 인스턴스를 하나 생성하면 DispatcherObject의 생성자가 호출된다. 생성자에서는 현재 스레드의 Dispatcher를 DispatcherObject 클래스의 Dispatcher 변수에 저장한다.
+
+#### `Class`
+![image](https://user-images.githubusercontent.com/74305823/167592002-30082dee-e852-4653-9821-8dfef53c8611.png)
+
+#### `Constructor`
+```csharp
+private Dispatcher _dispatcher;
+
+public Dispatcher Dispatcher
+{
+    get
+    {
+        // This property is free-threaded.
+        return _dispatcher;
+    }
+}
+        
+protected DispatcherObject()
+{
+    _dispatcher = Dispatcher.CurrentDispatcher;
+}
+```
+
 <br>
 
 ## BackgroundWorker
