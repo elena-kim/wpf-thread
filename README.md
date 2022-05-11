@@ -83,6 +83,10 @@ protected DispatcherObject()
 
 <br>
 
+### CheckAccess
+
+<br>
+
 ## BackgroundWorker
 
 <br>
