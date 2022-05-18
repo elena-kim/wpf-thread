@@ -84,6 +84,53 @@ protected DispatcherObject()
 <br>
 
 ### CheckAccess
+`CheckAccess()` 메서드는 해당 Thread가 UI Thread인지 체크하는 역할을 한다. 해당 Thread가 작업 Thread인 경우 `Dispatcher.Invoke()` 또는 `Dispatcher.BeginInvoke()`를 사용하여 UI Thread로 작업 요청을 보낸다.
+
+```csharp
+using System;
+using System.Windows;
+using System.Threading.Tasks;
+
+namespace WpfApp
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            // 작업 Thread 생성
+            Task.Factory.StartNew(Run);            
+        }
+
+        private void Run()
+        {
+            // 해당 Thread가 UI Thread인가?
+            if (textBox1.Dispatcher.CheckAccess())
+            {
+                //UI Thread인 경우
+                textBox1.Text = "Data";
+            }
+            else
+            {
+                // 작업 Thread인 경우
+                textBox1.Dispatcher.BeginInvoke(new Action(Run));
+            }
+        }
+    }
+}
+```
+
+<br>
+
+### Invoke
+
+<br>
+
+### BeginInvoke
 
 <br>
 
