@@ -137,7 +137,7 @@ public partial class MainWindow : Window
 	InitializeComponent();
 	Task.Factory.StartNew(() =>
 	{
-		InvokeMethodExample();
+	    InvokeMethodExample();
 	});
     }
 
@@ -158,20 +158,23 @@ public partial class MainWindow : Window
 `BeginInvoke`는 `Delegate`를 사용하여 비동기로 메서드를 수행한다. 즉 메서드가 호출되기 전 즉시 반환된다. 
 
 ```csharp
-public MainWindow()
+public partial class MainWindow : Window
 {
-	InitializeComponent();
-	Task.Factory.StartNew(() =>
-		{
-			BeginInvokeExample();
-		});
-}
+    public MainWindow()
+    {
+        InitializeComponent();
+        Task.Factory.StartNew(() =>
+        {
+	    BeginInvokeExample();
+        });
+    }
 
-private void BeginInvokeExample()
-{
-	DispatcherOperation op = Dispatcher.BeginInvoke((Action)(() => {
-			btn1.Content = "By BeginInvoke";
-		}));
+    private void BeginInvokeExample()
+    {
+        DispatcherOperation op = Dispatcher.BeginInvoke((Action)(() => {
+	    btn1.Content = "By BeginInvoke";
+        }));
+    }
 }
 ```
 
