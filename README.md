@@ -45,7 +45,7 @@ WPF에서 멀티 스레드를 다루는 방법에는 **`Dispatcher`** 와 **`Bac
 
 ![image](https://user-images.githubusercontent.com/74305823/167331110-0b53dfe4-7bd0-4e6b-92b6-932c511d2b02.png)
 
-**Dispatcher**는 `System.Windows.threading.Dispatcher` 클래스의 인스턴스로, UI 컨트롤 작업 항목의 대기열을 관리한다. WPF 애플리케이션을 실행하면 자동적으로 Dispatcher 객체가 생성되고 Run 메서드가 호출된다. Run 메서드는 작업 대기열을 초기화하기 위해 사용된다. 
+**Dispatcher**는 `System.Windows.Threading.Dispatcher` 클래스의 인스턴스로, UI 컨트롤 작업 항목의 대기열을 관리한다. WPF 애플리케이션을 실행하면 자동적으로 Dispatcher 객체가 생성되고 Run 메서드가 호출된다. Run 메서드는 작업 대기열을 초기화하기 위해 사용된다. 
 
 Dispatcher는 UI 스레드와 연관되어 있으며, UI 스레드 대기열에 있는 메서드는 Dispatcher 객체 내에서 호출된다. 이벤트가 호출되거나 화면이 바뀔 때, 혹은 코드 비하인드에서 메서드가 호출될 때마다 이 모든 일들은 UI 스레드와 UI 스레드 대기열에서 일어나며, 호출된 메서드는 Dispatcher 큐에 들어가게 된다. Dispatcher는 동기 순서에 따라 메시지 큐를 실행한다.
 
@@ -182,6 +182,79 @@ private void BeginInvokeExample()
 <br>
 
 ## BackgroundWorker
+
+**BackgroundWorker**는 `System.ComponentModel.BackgroundWorker` 클래스의 인스턴스로, 기본 프로그램 동작과 함께 동시에 처리되어야 하는 어떤 동작이 필요할 때 사용한다. 즉, 메인 스레드가 실행되는 도중에 별도의 스레드에서 비동기적으로 코드를 수행할 수 있다.
+
+#### `MainWindow.xaml`
+```xaml
+<Window x:Class="ThreadTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <StackPanel VerticalAlignment="Center">
+            <Button x:Name="btn" Content="Click to capture" FontSize="20" Click="btn_Click"/>
+            <Label x:Name="txtLbl" Content="NULL" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Label x:Name="txtBackLbl" Content="number" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </StackPanel>
+    </Grid>
+</Window>
+```
+
+#### `MainWindow.xaml.cs`
+```csharp
+using System.ComponentModel;
+using System.Threading;
+using System.Windows;
+using System.Windows.Threading;
+
+namespace ThreadTest
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+            initBackgroundThread();
+        }
+
+        private BackgroundWorker _backgroundWorker;
+        private int number = 0;
+
+        private void initBackgroundThread()
+        {
+            _backgroundWorker = new BackgroundWorker();
+            _backgroundWorker.DoWork += _DoWork;
+            _backgroundWorker.RunWorkerAsync();
+        }
+
+        private void _DoWork(object? sender, DoWorkEventArgs e)
+        {
+            while (true)
+            {
+                Thread.Sleep(200);
+
+                this.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+                    (ThreadStart)delegate ()
+                    {
+                        txtBackLbl.Content = number.ToString();
+
+                        number++;
+                        if (number % 10000 == 0)
+                        {
+                            number = 0;
+                        }
+                    });
+            }
+        }
+
+        private void btn_Click(object sender, RoutedEventArgs e)
+        {
+            txtLbl.Content = $"capture: {number}";
+        }
+    }
+}
+```
 
 <br>
 
