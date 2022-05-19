@@ -127,10 +127,57 @@ namespace WpfApp
 <br>
 
 ### Invoke
+`Invoke`는 `Action` 또는 `Delegate`를 사용하여 동기적으로 메서드를 수행한다. 즉 이를 호출한 외부 스레드에서 이벤트 핸들러 함수가 끝날 때까지 Sleep 상태로 기다렸다가 함수 실행이 끝나면 다음 코드가 진행된다. 
+
+```csharp
+public partial class MainWindow : Window
+{
+	public MainWindow()
+	{
+		InitializeComponent();
+		Task.Factory.StartNew(() =>
+			{
+				InvokeMethodExample();
+			});
+	}
+
+	private void InvokeMethodExample()
+	{
+		Thread.Sleep(2000);
+		Dispatcher.Invoke(() =>
+			{
+				btn1.Content = "By Invoke";
+			});
+	}
+}
+```
 
 <br>
 
 ### BeginInvoke
+`BeginInvoke`는 `Delegate`를 사용하여 비동기로 메서드를 수행한다. 즉 메서드가 호출되기 전 즉시 반환된다. 
+
+```csharp
+public MainWindow()
+{
+	InitializeComponent();
+	Task.Factory.StartNew(() =>
+		{
+			BeginInvokeExample();
+		});
+}
+
+private void BeginInvokeExample()
+{
+	DispatcherOperation op = Dispatcher.BeginInvoke((Action)(() => {
+			btn1.Content = "By BeginInvoke";
+		}));
+}
+```
+
+`BeginInvoke`는 `DispatcherOperation` 객체를 반환한다. `DispatcherOperation`은 작업의 완료 여부를 알고 싶을 때 사용할 수 있다.
+- `Aborted` : 작업이 중단될 때 발생
+- `Completed` : 작업이 완료되면 발생
 
 <br>
 
