@@ -132,23 +132,23 @@ namespace WpfApp
 ```csharp
 public partial class MainWindow : Window
 {
-	public MainWindow()
+    public MainWindow()
+    {
+	InitializeComponent();
+	Task.Factory.StartNew(() =>
 	{
-		InitializeComponent();
-		Task.Factory.StartNew(() =>
-			{
-				InvokeMethodExample();
-			});
-	}
+		InvokeMethodExample();
+	});
+    }
 
-	private void InvokeMethodExample()
+    private void InvokeMethodExample()
+    {
+	Thread.Sleep(2000);
+	Dispatcher.Invoke(() =>
 	{
-		Thread.Sleep(2000);
-		Dispatcher.Invoke(() =>
-			{
-				btn1.Content = "By Invoke";
-			});
-	}
+	    btn1.Content = "By Invoke";
+	});
+    }
 }
 ```
 
