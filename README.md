@@ -215,14 +215,14 @@ namespace ThreadTest
 {
     public partial class MainWindow : Window
     {
+        private BackgroundWorker _backgroundWorker;
+        private int number = 0;
+
         public MainWindow()
         {
             InitializeComponent();
             initBackgroundThread();
         }
-
-        private BackgroundWorker _backgroundWorker;
-        private int number = 0;
 
         private void initBackgroundThread()
         {
@@ -237,17 +237,16 @@ namespace ThreadTest
             {
                 Thread.Sleep(200);
 
-                this.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
-                    (ThreadStart)delegate ()
-                    {
-                        txtBackLbl.Content = number.ToString();
+                this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (ThreadStart)delegate ()
+		{
+		    txtBackLbl.Content = number.ToString();
 
-                        number++;
-                        if (number % 10000 == 0)
-                        {
-                            number = 0;
-                        }
-                    });
+		    number++;
+		    if (number % 10000 == 0)
+		    {
+			number = 0;
+		    }
+		});
             }
         }
 
